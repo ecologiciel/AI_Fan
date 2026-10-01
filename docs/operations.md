@@ -37,7 +37,7 @@ Définir `VPS_HOSTNAME` dans `deploy/.env.production`, puis démarrer avec :
 docker compose --env-file deploy/.env.production -f docker-compose.hostinger-path.yml up --build -d
 ```
 
-Pour l'instance Hostinger `srv1610573.hstgr.cloud`, la valeur publique est `VPS_HOSTNAME=srv1610573.hstgr.cloud` et l'application est publiée sous `https://srv1610573.hstgr.cloud/football-ai/`. La configuration de production requiert également `BARCELONA_EXTERNAL_TEAM_ID` : il s'agit de l'identifiant d'équipe fourni par Sportmonks, utilisé uniquement comme seed du profil multi-équipe FC Barcelona. Il ne doit jamais être remplacé par une statistique ou un identifiant inventé.
+Pour l'instance Hostinger `srv1610573.hstgr.cloud`, la valeur publique est `VPS_HOSTNAME=srv1610573.hstgr.cloud` et l'application est publiée sous `https://srv1610573.hstgr.cloud/football-ai/`. `BARCELONA_EXTERNAL_TEAM_ID` est l'identifiant d'équipe fourni par Sportmonks, utilisé uniquement comme seed du profil multi-équipe FC Barcelona. Il peut rester vide tant que Sportmonks n'est pas configuré ; il ne doit jamais être remplacé par une statistique ou un identifiant inventé.
 
 Le déploiement sur ce VPS se fait sous le nom Compose `football-ai`, avec des ports exclusivement locaux :
 

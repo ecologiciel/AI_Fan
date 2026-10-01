@@ -28,7 +28,7 @@ services:
       WEB_URL: https://${APP_DOMAIN:?Set APP_DOMAIN in deploy/.env.production}
       SPORTMONKS_API_TOKEN: ${SPORTMONKS_API_TOKEN:-}
       FOOTBALL_PROVIDER: sportmonks
-      BARCELONA_EXTERNAL_TEAM_ID: ${BARCELONA_EXTERNAL_TEAM_ID:?Set BARCELONA_EXTERNAL_TEAM_ID in deploy/.env.production}
+      BARCELONA_EXTERNAL_TEAM_ID: ${BARCELONA_EXTERNAL_TEAM_ID:-}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
       LLM_PROVIDER: openai
       LLM_MODEL: ${LLM_MODEL:-}
@@ -51,7 +51,7 @@ services:
       DATABASE_URL: postgresql+psycopg://football_ai:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in deploy/.env.production}@postgres:5432/football_ai
       SPORTMONKS_API_TOKEN: ${SPORTMONKS_API_TOKEN:-}
       FOOTBALL_PROVIDER: sportmonks
-      BARCELONA_EXTERNAL_TEAM_ID: ${BARCELONA_EXTERNAL_TEAM_ID:?Set BARCELONA_EXTERNAL_TEAM_ID in deploy/.env.production}
+      BARCELONA_EXTERNAL_TEAM_ID: ${BARCELONA_EXTERNAL_TEAM_ID:-}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
       LLM_PROVIDER: openai
       LLM_MODEL: ${LLM_MODEL:-}
