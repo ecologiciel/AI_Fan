@@ -1,0 +1,82 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: football_ai
+      POSTGRES_USER: football_ai
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in deploy/.env.production}
+    volumes:
+      - football_ai_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U football_ai -d football_ai"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/api.Dockerfile
+    restart: unless-stopped
+    environment:
+      APP_ENV: production
+      APP_SECRET_KEY: ${APP_SECRET_KEY:?Set APP_SECRET_KEY in deploy/.env.production}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:?Set ADMIN_EMAIL in deploy/.env.production}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD in deploy/.env.production}
+      DATABASE_URL: postgresql+psycopg://football_ai:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in deploy/.env.production}@postgres:5432/football_ai
+      WEB_URL: https://${VPS_HOSTNAME:?Set VPS_HOSTNAME in deploy/.env.production}
+      SPORTMONKS_API_TOKEN: ${SPORTMONKS_API_TOKEN:-}
+      FOOTBALL_PROVIDER: sportmonks
+      BARCELONA_EXTERNAL_TEAM_ID: ${BARCELONA_EXTERNAL_TEAM_ID:?Set BARCELONA_EXTERNAL_TEAM_ID in deploy/.env.production}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      LLM_PROVIDER: openai
+      LLM_MODEL: ${LLM_MODEL:-}
+      MAX_REQUEST_BYTES: 1000000
+      JOB_RETRY_BASE_SECONDS: 60
+    ports:
+      - "127.0.0.1:18000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/worker.Dockerfile
+    restart: unless-stopped
+    environment:
+      APP_ENV: production
+      APP_SECRET_KEY: ${APP_SECRET_KEY:?Set APP_SECRET_KEY in deploy/.env.production}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:?Set ADMIN_EMAIL in deploy/.env.production}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD in deploy/.env.production}
+      DATABASE_URL: postgresql+psycopg://football_ai:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in deploy/.env.production}@postgres:5432/football_ai
+      SPORTMONKS_API_TOKEN: ${SPORTMONKS_API_TOKEN:-}
+      FOOTBALL_PROVIDER: sportmonks
+      BARCELONA_EXTERNAL_TEAM_ID: ${BARCELONA_EXTERNAL_TEAM_ID:?Set BARCELONA_EXTERNAL_TEAM_ID in deploy/.env.production}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      LLM_PROVIDER: openai
+      LLM_MODEL: ${LLM_MODEL:-}
+      SCHEDULER_SYNC_INTERVAL_SECONDS: 21600
+      SCHEDULER_DISPATCH_INTERVAL_SECONDS: 60
+      JOB_RETRY_BASE_SECONDS: 60
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/web.Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: /football-ai/api/v1
+        NEXT_PUBLIC_BASE_PATH: /football-ai
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:13000:3000"
+    depends_on:
+      api:
+        condition: service_started
+
+volumes:
+  football_ai_postgres_data:

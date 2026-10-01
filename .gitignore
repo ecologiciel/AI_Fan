@@ -1,0 +1,12 @@
+.env
+deploy/.env.production
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.py[cod]
+node_modules/
+.next/
+*.tsbuildinfo
+coverage/

@@ -1,0 +1,7 @@
+{
+  "fixture_id": 9004,
+  "player": {"id": 501, "name": "Synthetic Player"},
+  "team_id": 100,
+  "minutes": 90,
+  "statistics": [{"metric": "player_shots", "value": 8}]
+}

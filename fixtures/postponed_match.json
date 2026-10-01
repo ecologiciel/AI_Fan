@@ -1,0 +1,10 @@
+{
+  "id": 9003,
+  "starting_at": "2030-05-26T19:00:00Z",
+  "state": {"short_name": "POSTP"},
+  "participants": [
+    {"id": 100, "name": "FC Barcelona", "meta": {"location": "home"}},
+    {"id": 400, "name": "Postponed Opponent", "meta": {"location": "away"}}
+  ],
+  "scores": []
+}

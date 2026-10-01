@@ -1,0 +1,10 @@
+{
+  "id": 9002,
+  "starting_at": "2030-05-19T19:00:00Z",
+  "state": {"short_name": "FT"},
+  "participants": [
+    {"id": 100, "name": "FC Barcelona", "meta": {"location": "home"}},
+    {"id": 300, "name": "No xG Opponent", "meta": {"location": "away"}}
+  ],
+  "statistics": []
+}

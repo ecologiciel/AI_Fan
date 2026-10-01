@@ -1,0 +1,13 @@
+{
+  "id": 9001,
+  "league": {"id": 77, "name": "Synthetic League", "country_name": "Spain"},
+  "season": {"id": 2030},
+  "starting_at": "2030-05-12T19:00:00Z",
+  "state": {"short_name": "NS"},
+  "result_info": null,
+  "participants": [
+    {"id": 100, "name": "FC Barcelona", "meta": {"location": "home"}},
+    {"id": 200, "name": "Synthetic Opponent", "meta": {"location": "away"}}
+  ],
+  "scores": []
+}
